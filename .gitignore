@@ -1,1 +1,6 @@
 src/server/node_modules
+src/solver/CMakeFiles
+src/solver/CMakeCache.txt
+src/solver/cmake_install.cmake
+src/solver/Makefile
+src/solver/build/camCalibNode

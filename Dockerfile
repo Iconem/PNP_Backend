@@ -34,4 +34,4 @@ EXPOSE 3000
 
 # Run server
 WORKDIR /home/node/app/server
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]
