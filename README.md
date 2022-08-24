@@ -127,48 +127,48 @@ Le code du serveur se trouve dans le dossier *src/server*. Il n'est pas nécessa
 
 Dans ce qui suit, on utilise les notations suivantes:
 - $R_{w\rightarrow c} \in M_{3,3}$ représente la rotation de la caméra dans le repère-monde (w: world).
-- <span>$t_{w\rightarrow c} \in \mathbb{R}_3$</span> représente la position de la caméra dans le repère monde.
-- $`f`$ représente la distance focale de la caméra.
-- $`h`$ and $`w`$ représentent les dimensions de la photo en pixels.
+- $t_{w\rightarrow c} \in \mathbb{R}_3$ représente la position de la caméra dans le repère monde.
+- $f$ représente la distance focale de la caméra.
+- $h$ and $w$ représentent les dimensions de la photo en pixels.
 
-- $`P^{3D}_w = \begin{pmatrix}
+- $P^{3D}_w = \begin{pmatrix}
   x^{3D}_w\\ 
   \\
   y^{3D}_w\\ 
   \\
   z^{3D}_w
-\end{pmatrix}`$ désigne un point de l'espace, dans le repère monde.
-- $`P^{3D}_c = \begin{pmatrix}
+\end{pmatrix}$ désigne un point de l'espace, dans le repère monde.
+- $P^{3D}_c = \begin{pmatrix}
   x^{3D}_c\\ 
   \\
   y^{3D}_c\\ 
   \\
   z^{3D}_c
-\end{pmatrix}`$ désigne le même point, dans le repère de la caméra.
-- $`P^{proj}_c = \begin{pmatrix}
+\end{pmatrix}$ désigne le même point, dans le repère de la caméra.
+- $P^{proj}_c = \begin{pmatrix}
   x^{proj}_c\\ 
   \\
   y^{proj}_c\\ 
   \\
   z^{proj}_c
-\end{pmatrix}`$ désigne la projection de $P^{3D}$ dans le plan de la caméra.
+\end{pmatrix}$ désigne la projection de $P^{3D}$ dans le plan de la caméra.
 
 ![pinhole_camera.png](/platform-docs/general/pinhole_camera.png)
 
-On pose également que l'image correspond au domaine $`y_c \in [-\frac{1}{2}, \frac{1}{2}], x_c \in [-\frac{1}{2}, \frac{1}{2}]$ du plan de la caméra, $z_c = -f`$.
+On pose également que l'image correspond au domaine $y_c \in [-\frac{1}{2}, \frac{1}{2}], x_c \in [-\frac{1}{2}, \frac{1}{2}]$ du plan de la caméra, $z_c = -f$.
 
-- $`P^{2D} = \begin{pmatrix}
+- $P^{2D} = \begin{pmatrix}
   x^{2D}\\ 
   y^{2D}
-\end{pmatrix}`$ désigne les coordonnées du points correspondant sur l'image, en pixels.
+\end{pmatrix}$ désigne les coordonnées du points correspondant sur l'image, en pixels.
 
 ![camera_plane.png](/platform-docs/general/camera_plane.png)
 
 ### Projection perspective
 
-Dans cette section, on suppose qu'il n'y a pas de distorsion. On cherche à exprimer les coordonnées $`P^{2D}`$ d'un point sur l'image en fonction de ses coordonnées dans l'espace, $`P^{3D}_w`$. 
+Dans cette section, on suppose qu'il n'y a pas de distorsion. On cherche à exprimer les coordonnées $P^{2D}$ d'un point sur l'image en fonction de ses coordonnées dans l'espace, $P^{3D}_w$. 
 
-On commence par exprimer les coordonnées du point dans le repère de la caméra, $`P^{3D}_c`$, en fonction de $`P^{3D}_w`$. 
+On commence par exprimer les coordonnées du point dans le repère de la caméra, $P^{3D}_c$, en fonction de $P^{3D}_w$. 
 
 $$
  P^{3D}_c = R^{-1}_{w\rightarrow c} \times (P^{3D}_w - t_{w\rightarrow c})
