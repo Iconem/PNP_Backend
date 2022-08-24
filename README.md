@@ -21,7 +21,7 @@ Enfin, l'application (solveur + serveur) est encapsulée dans un **conteneur** [
 
 - Assurez-vous d'avoir **docker** installé sur votre machine. Sinon, consultez la [page de téléchargement](https://docs.docker.com/get-docker/) et installez la version adaptée à votre machine.
 - Téléchargez ce repo.
-- Optionnel : téléchargez l'application [Postman](https://www.postman.com/downloads/) pour effectuerp lus facilement des requêtes vers le serveur.
+- Optionnel : téléchargez l'application [Postman](https://www.postman.com/downloads/) pour effectuer plus facilement des requêtes vers le serveur.
 
 
 ## Usage
