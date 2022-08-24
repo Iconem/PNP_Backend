@@ -32,6 +32,6 @@ RUN cmake . && make
 # Expose ports
 EXPOSE 3000
 
-# Run server
+# Start server
 WORKDIR /home/node/app/server
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]

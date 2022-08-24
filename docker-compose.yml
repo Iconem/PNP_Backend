@@ -7,5 +7,7 @@ services:
       - "3000:3000"
     volumes:
       - ./src:/home/node/app
+      - /home/node/app/server/node_modules
+      - /home/node/app/solver/build
 
 
