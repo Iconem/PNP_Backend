@@ -21,7 +21,7 @@ Enfin, l'application (solveur + serveur) est encapsulée dans un **conteneur** [
 
 - Assurez-vous d'avoir **docker** installé sur votre machine. Sinon, consultez la [page de téléchargement](https://docs.docker.com/get-docker/) et installez la version adaptée à votre machine.
 - Téléchargez ce repo.
-- Optionnel : téléchargez l'application [Postman](https://www.postman.com/downloads/) pour effectuer plus facilement des requêtes vers le serveur.
+- Optionnel : téléchargez l'application [Postman](https://www.postman.com/downloads/) pour effectuerp lus facilement des requêtes vers le serveur.
 
 
 ## Usage
@@ -120,3 +120,126 @@ Le code du solveur se trouve dans le fichier *src/solver/camCalibNode.cpp*. En c
 
 ### Serveur
 Le code du serveur se trouve dans le dossier *src/server*. Il n'est pas nécessaire de relancer le conteneur docker lorsque vous mettez à jour ce code : la mise à jour est faite automatiquement.
+
+## Bases théoriques
+
+### Notations
+
+Dans ce qui suit, on utilise les notations suivantes:
+- $R_{w\rightarrow c} \in M_{3,3}$ représente la rotation de la caméra dans le repère-monde (w: world).
+- $t_{w\rightarrow c} \in \mathbb{R}_3$ représente la position de la caméra dans le repère monde.
+- $f$ représente la distance focale de la caméra.
+- $h$ and $w$ représentent les dimensions de la photo en pixels.
+
+- $P^{3D}_w = \begin{pmatrix}
+  x^{3D}_w\\ 
+  \\
+  y^{3D}_w\\ 
+  \\
+  z^{3D}_w
+\end{pmatrix}$ désigne un point de l'espace, dans le repère monde.
+- $P^{3D}_c = \begin{pmatrix}
+  x^{3D}_c\\ 
+  \\
+  y^{3D}_c\\ 
+  \\
+  z^{3D}_c
+\end{pmatrix}$ désigne le même point, dans le repère de la caméra.
+- $P^{proj}_c = \begin{pmatrix}
+  x^{proj}_c\\ 
+  \\
+  y^{proj}_c\\ 
+  \\
+  z^{proj}_c
+\end{pmatrix}$ désigne la projection de $P^{3D}$ dans le plan de la caméra.
+
+![pinhole_camera.png](/platform-docs/general/pinhole_camera.png)
+
+On pose également que l'image correspond au domaine $y_c \in [-\frac{1}{2}, \frac{1}{2}], x_c \in [-\frac{1}{2}, \frac{1}{2}]$ du plan de la caméra, $z_c = -f$.
+
+- $P^{2D} = \begin{pmatrix}
+  x^{2D}\\ 
+  y^{2D}
+\end{pmatrix}$ désigne les coordonnées du points correspondant sur l'image, en pixels.
+
+![camera_plane.png](/platform-docs/general/camera_plane.png)
+
+### Projection perspective
+
+Dans cette section, on suppose qu'il n'y a pas de distorsion. On cherche à exprimer les coordonnées $P^{2D}$ d'un point sur l'image en fonction de ses coordonnées dans l'espace, $P^{3D}_w$. 
+
+On commence par exprimer les coordonnées du point dans le repère de la caméra, $P^{3D}_c$, en fonction de $P^{3D}_w$. 
+
+$$
+ P^{3D}_c = R^{-1}_{w\rightarrow c} \times (P^{3D}_w - t_{w\rightarrow c})
+$$
+
+Maintenant que l'on connaît les coordonnées du point 3D dans le repère caméra, on exprime le projeté $P^{proj}_c$ en fonction de $P^{3D}_c$. 
+
+Par définition du plan de la caméra :
+$$z^{proj}_c = -f$$ 
+
+Pour $x^{proj}_c$ et $y^{proj}_c$, on applique le théorème de Thalès :
+
+$$
+\begin{matrix}
+x^{proj}_c = -f\frac{x^{3D}_c}{z^{3D}_c} \\
+\\
+y^{proj}_c = -f\frac{y^{3D}_c}{z^{3D}_c} 
+\end{matrix}
+$$
+
+ce qui, normalisé dans le plan image $y_c \in [-\frac{1}{2}, \frac{1}{2}], x_c \in [-\frac{1}{2}, \frac{1}{2}]$, donne :
+$$
+P^{proj}_c = \begin{pmatrix}
+-f \times \frac{x^{3D}_c}{z^{3D}_c} \\
+\\
+-\frac{fw}{h} \times \frac{y^{3D}_c}{z^{3D}_c}
+\end{pmatrix}
+$$
+Pour finir, on en déduit les coordonnées-image, $P^{2D}$ :
+
+$$
+P^{2D} = \begin{pmatrix}
+-x^{proj}_c \times w = f \times w \times \frac{x^{3D}_c}{z^{3D}_c} \\
+\\
+ -y^{proj}_c \times h = \frac{fw}{h} \times h \times \frac{y^{3D}_c}{z^{3D}_c}
+\end{pmatrix}
+$$
+
+### Prise en compte de la distorsion
+
+Nous avons adopté un modèle simplifié dans lequel la distorsion est dûe uniquement à un décalage du centre optique de la caméra. Autrement dit, le centre optique de la caméra a pour coordonnées $(c_x, c_y) \neq (0,0)$, ce qui a pour conséquence de décaler les points de la photo :
+$$
+P^{proj}_c = \begin{pmatrix}
+-f \times \frac{x^{3D}_c}{z^{3D}_c} - c_x\\
+\\
+-\frac{fw}{h} \times \frac{y^{3D}_c}{z^{3D}_c} -c_y
+\end{pmatrix}
+$$
+puis :
+$$
+P^{2D} = \begin{pmatrix}
+fw \times \frac{x^{3D}_c}{z^{3D}_c} + c_xw\\
+\\
+\frac{fw}{h} \times h \times \frac{y^{3D}_c}{z^{3D}_c} + c_yh
+\end{pmatrix}
+$$
+
+### Matrice intrinsèque
+En généralisant le raisonnement précédent, on peut résumer le lien entre un point $P^{3D}_w$ de l'espace et le point projeté $P^{proj}_c$ :
+
+$$
+ P^{proj}_c =  K \times [I_3 | 0] \times [R_{w\rightarrow c} | t_{w\rightarrow c}] \times P^{3D}_w
+$$
+où $K = \begin{pmatrix}
+  f & 0 & c_x\\ 
+  \\
+  0 & \frac{fw}{h} & c_y \\ 
+  \\
+  0 & 0 & 1
+\end{pmatrix}$ est appelée *matrice intrinsèque* de la caméra.
+
+
+### Problème PnP
+Le problème PnP consiste à estimer les paramètres intrinsèques (focale $f$ et décentrage $(c_x, c_y)$) et extrinsèques (position $t$ et rotation $R$) de la caméra.
