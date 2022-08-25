@@ -125,10 +125,13 @@ Le code du serveur se trouve dans le dossier *src/server*. Il n'est pas nécessa
 
 ### Notations
 
-Dans ce qui suit, on utilise les notations suivantes: $f$ et $w$ coucou
-- $R_{w\rightarrow c} \in M_{3,3}$ représente la rotation de la caméra dans le repère-monde (w: world).
-- $t_{w\rightarrow c} \in \mathbb{R}_3$ représente la position de la caméra dans le repère monde.
+Dans ce qui suit, on utilise les notations suivantes:
+$R_{w\rightarrow c} \in M_{3,3}$ représente la rotation de la caméra dans le repère-monde (w: world).
+
+$t_{w\rightarrow c} \in \mathbb{R}_3$ représente la position de la caméra dans le repère monde.
+
 $f$ représente la distance focale de la caméra.
+
 $h$ and $w$ représentent les dimensions de la photo en pixels.
 
 - $P^{3D}_w = \begin{pmatrix}
