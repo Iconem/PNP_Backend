@@ -8,7 +8,7 @@ Ce projet contient un solveur pour le problème ["Perspective-n-Points"](https:/
 Cette estimation se fait à partir de `n` points dont on connaît à la fois les coordonnées réelles (en 3 dimensions) et les coordonnées dans la photo (en 2 dimensions). L'estimation repose sur une modélisation du comportement des appareils photo basée sur la projection perspective. D'où le nom de "Perspective-n-Points".
 
 Cette page indique comment installer, démarrer, et utiliser le solveur.
-Pour en savoir plus sur les bases théoriques de ce projet (modélisation et résolution du problème), consultez le wiki.
+Pour en savoir plus sur les bases théoriques de ce projet (modélisation et résolution du problème), consultez [notre wiki](https://github.com/Iconem/PNP_Backend/wiki/Th%C3%A9orie-du-probl%C3%A8me-PnP).
 
 ## Implémentation
 
