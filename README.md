@@ -9,8 +9,7 @@ Cette estimation se fait à partir de `n` points dont on connaît à la fois les
 
 *Cette page indique comment installer, démarrer, et utiliser le solveur.*
 
-*Pour visualiser un exemple d'utilisation, consultez [cette page de notre wiki](https://github.com/Iconem/PNP_Backend/wiki/Exemple-de-r%C3%A9sultat).*
-*Pour en savoir plus sur les bases théoriques de ce projet, consultez [cette page de notre wiki](https://github.com/Iconem/PNP_Backend/wiki/Bases-th%C3%A9oriques).*
+*Pour visualiser un exemple d'utilisation ou en savoir plus sur les bases théoriques de ce projet, consultez [notre wiki](https://github.com/Iconem/PNP_Backend/wiki).*
 
 ## Implémentation
 
