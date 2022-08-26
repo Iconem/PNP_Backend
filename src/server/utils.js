@@ -16,10 +16,7 @@ function bindingsToSolverArguments(bindings) {
   	      y: item.point3D.y - shift.y + 1,
   	      z: item.point3D.z - shift.z + 1
   	    },
-  	    point2D: {
-  	      x: item.point2D.x / 2,
-  	      y: item.point2D.y / 2
-  	    }
+  	    point2D: item.point2D
   	  };
   	});
 
