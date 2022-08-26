@@ -63,7 +63,7 @@ Pour lancer un calcul, on envoie une requête **POST** sur la route **localhost:
 }
 ```
 
-Attention, **les coordonnées 2D doivent être comprises entre -1 et 1** (le coin inférieur gauche de la photo ayant pour coordonnées [-1, -1]).
+Attention, **les coordonnées 2D doivent être comprises entre $- \frac{1}{2}$ et $\frac{1}{2}$** (le coin inférieur gauche de la photo ayant pour coordonnées $[- \frac{1}{2}, - \frac{1}{2}]$).
 
 
 ### Interpréter le résultat
